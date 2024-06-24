@@ -1,0 +1,232 @@
+﻿@model IEnumerable<SAPCS.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="container" style="margin: 12px">
+    <h1>Clientes</h1>
+    <p>
+        <a class="btn btn-principal" role="button" asp-action="Create">&#43 Novo</a>
+    </p>
+
+    <div id="filtro-data">
+        Filtrar por data: <input id="dtInicio" type="date" /><span> até </span><input id="dtFim" type="date" />
+        <select id="selecionar-data">
+            <option value="6">@Html.DisplayNameFor(model => model.DtCadastro)</option>
+            <option value="7">@Html.DisplayNameFor(model => model.DtModificacao)</option>
+            <option value="5">@Html.DisplayNameFor(model => model.DtNascCli)</option>
+        </select>
+    </div>
+
+    <p class="reexibir">
+        <button id="reexibir-todos" class="btn btn-principal">Reexibir todos</button>
+
+        <button id="rv-0" class="reexibir-vis btn btn-secundario" data-column="0">@Html.DisplayNameFor(model => model.Id)</button>
+        <button id="rv-1" class="reexibir-vis btn btn-secundario" data-column="1">@Html.DisplayNameFor(model => model.NomeCli)</button>
+        <button id="rv-2" class="reexibir-vis btn btn-secundario" data-column="2">@Html.DisplayNameFor(model => model.TelCli)</button>
+        <button id="rv-3" class="reexibir-vis btn btn-secundario" data-column="3">@Html.DisplayNameFor(model => model.CPFCli)</button>
+        <button id="rv-4" class="reexibir-vis btn btn-secundario" data-column="4">@Html.DisplayNameFor(model => model.EmailCli)</button>
+        <button id="rv-5" class="reexibir-vis btn btn-secundario" data-column="5">@Html.DisplayNameFor(model => model.DtNascCli)</button>
+        <button id="rv-6" class="reexibir-vis btn btn-secundario" data-column="6">@Html.DisplayNameFor(model => model.DtCadastro)</button>
+        <button id="rv-7" class="reexibir-vis btn btn-secundario" data-column="7">@Html.DisplayNameFor(model => model.DtModificacao)</button>
+    </p>
+
+    <table class="table" style="width: 100%">
+        <thead class="table-head">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NomeCli)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TelCli)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CPFCli)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailCli)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DtNascCli)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DtCadastro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DtModificacao)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-0" class="ocultar-vis btn" data-column="0">@Html.DisplayNameFor(model => model.Id)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-1" class="ocultar-vis btn" data-column="1">@Html.DisplayNameFor(model => model.NomeCli)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-2" class="ocultar-vis btn" data-column="2">@Html.DisplayNameFor(model => model.TelCli)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-3" class="ocultar-vis btn" data-column="3">@Html.DisplayNameFor(model => model.CPFCli)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-4" class="ocultar-vis btn" data-column="4">@Html.DisplayNameFor(model => model.EmailCli)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-5" class="ocultar-vis btn" data-column="5">@Html.DisplayNameFor(model => model.DtNascCli)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-6" class="ocultar-vis btn" data-column="6">@Html.DisplayNameFor(model => model.DtCadastro)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-7" class="ocultar-vis btn" data-column="7">@Html.DisplayNameFor(model => model.DtModificacao)</a>
+                </th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@section Stylesheets{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" />
+}
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="~/js/padroesDtTable.js"></script>
+    <script src="~/js/extraDtTable.js"></script>
+
+    <script>
+        var tabela;
+        const editLink = '@Url.Action("Edit", "Clientes")/';
+        const detailsLink = '@Url.Action("Details", "Clientes")/';
+        const deleteLink = '@Url.Action("Delete", "Clientes")/';
+        var minDate;
+        var maxDate;
+        var exibirTodosRegistros = true;
+
+        $(document).ready(function () {
+            $("button.reexibir-vis").hide();
+            $("p.reexibir").hide();
+
+            tabela = $(".table").DataTable({
+                scrollX: true,
+                processing: true,
+                language: traducaoDataTable,
+                pagingType: "simple_numbers",
+                lengthMenu: padraoLengthMenu,
+                ajax: {
+                    "type": "GET",
+                    "url": "@Url.Action("getClientes", "Clientes")",
+                    "datatype": "JSON"
+                },
+                columns: [
+                    { "data": "id" },
+                    { "data": "nomeCli" },
+                    { "data": "telCli", render: renderizarTelefone },
+                    { "data": "cpfCli", render: renderizarCPF },
+                    { "data": "emailCli" },
+                    { "data": "dtNascCli", render: renderizarDate },
+                    { "data": "dtCadastro", render: renderizarDateTime },
+                    { "data": "dtModificacao", render: renderizarDateTime },
+                    { "data": "id", render: renderizarBotoesCRUD }
+                ],
+                order: [[7, 'desc']],
+                preDrawCallback: padraoPreDrawCallback,
+                drawCallback: padraoDrawCallback,
+                fnInitComplete: padraoFnInitComplete
+            });
+
+            $.fn.DataTable.ext.pager.numbers_length = 7;
+
+            $('a.ocultar-vis').on('click', ocultarVisualizacaoColuna);
+            $('button.reexibir-vis').on('click', reexibirVisualizacaoColuna);
+            $('#reexibir-todos').on('click', reexibirTodasColunas);
+
+            $("#selecionar-data").on('change', function () {
+                const selecionado = $("#selecionar-data").val();
+
+                if (selecionado == 5) {
+                    $("#filtro-data #dtFim, #filtro-data span").hide();
+                } else {
+                    $("#filtro-data #dtFim, #filtro-data span").show();
+                }
+
+                tabela.draw();
+            });
+
+            $('#dtInicio, #dtFim').on('change', function () {
+                const selecionado = $("#selecionar-data").val();
+
+                debugger;
+                if (selecionado == 5) {
+                    const dtNasc = $("#dtInicio").val();
+                    const dtNascValido = isValidDate(dtNasc);
+
+                    if (!dtNascValido) {
+                        exibirTodosRegistros = true;
+                        return;
+                    }
+                } else {
+                    const dtInicio = $("#dtInicio").val();
+                    const dtFim = $("#dtFim").val();
+                    const dtInicioValido = isValidDate(dtInicio);
+                    const dtFimValido = isValidDate(dtFim);
+
+
+                    if (!dtInicioValido && !dtFimValido) {
+                        exibirTodosRegistros = true;
+                        return;
+                    }
+                }
+
+                exibirTodosRegistros = false;
+                tabela.draw();
+            });
+
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    console.log(exibirTodosRegistros);
+                    if (exibirTodosRegistros) return true;
+                    const selecionado = $("#selecionar-data").val();
+
+                    var minValue = $("#dtInicio").val();
+                    var maxValue = $("#dtFim").val();
+                    var min = new Date(minValue);
+                    var max = new Date(maxValue);
+
+                    var date;
+
+                    debugger;
+                    if (selecionado == 5) {
+                        var date = data[selecionado].substr(0, 10)
+                        return minValue == date;
+                    } else {
+                        var localDate = new Date(data[selecionado].substr(0, 10));
+                        var date = new Date(localDate.getTime() + localDate.getTimezoneOffset() * 60000);
+                        if (
+                            ((min === null || min == "Invalid Date") && (max === null || max == "Invalid Date")) ||
+                            ((min === null || min == "Invalid Date") && date <= max) ||
+                            (min <= date && (max === null || max == "Invalid Date")) ||
+                            (min <= date && date <= max)
+                        ) {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            );
+        });
+    </script>
+}

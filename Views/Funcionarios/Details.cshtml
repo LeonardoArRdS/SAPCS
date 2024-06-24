@@ -1,0 +1,30 @@
+﻿@model SAPCS.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Funcionario</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayName("Nome")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomeFunc)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayName("Telefone")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TelFunc)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-principal" role="button" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+</div>

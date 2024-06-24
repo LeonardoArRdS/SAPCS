@@ -1,0 +1,60 @@
+﻿@model SAPCS.Models.Seguradora
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Seguradora</h4>
+    <hr/>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomeSegur)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EndSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EndSegur)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TelSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TelSegur)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SiteSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SiteSegur)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeContSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomeContSegur)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailContSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmailContSegur)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusSegur)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusSegur)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-principal" role="button" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+</div>

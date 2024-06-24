@@ -1,0 +1,42 @@
+﻿@model SAPCS.Models.Servico
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edição</h1>
+
+<h4>Servico</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <label asp-for="NomeServ" class="control-label"></label>
+                <input asp-for="NomeServ" class="form-control" placeholder="Nome"
+                pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" title="Digite um nome." required/>
+                <span asp-validation-for="NomeServ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SeguradoraId" class="control-label"></label>
+                <select asp-for="SeguradoraId" class="form-control" asp-items="ViewBag.SeguradoraId"></select>
+                <span asp-validation-for="SeguradoraId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="StatusServ"/> @Html.DisplayNameFor(model => model.StatusServ)
+                </label>
+            </div>
+            <div class="form-group pt-3">
+                <input type="submit" value="Salvar" class="btn btn-principal"/> |
+                <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

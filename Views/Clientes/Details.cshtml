@@ -1,0 +1,88 @@
+﻿@model SAPCS.Models.Cliente
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NomeCli)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.NomeCli)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TelCli)
+        </dt>
+        <dd class="col-sm-9">
+            <span class="phone">@Html.DisplayFor(model => model.TelCli)</span>
+</dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ValTel)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ValTel)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CPFCli)
+        </dt>
+        <dd class="col-sm-9">
+            <span class="cpf">@Html.DisplayFor(model => model.CPFCli)</span>
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.EmailCli)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.EmailCli)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ValEmail)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ValEmail)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.DtNascCli)
+        </dt>
+        <dd class="col-sm-9">
+            @Convert.ToDateTime(Model.DtNascCli).ToString("dd/MM/yyyy")
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.StatusCli)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.StatusCli)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.DtCadastro)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.DtCadastro)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.DtModificacao)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.DtModificacao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-principal" role="button" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+</div>
+
+
+
+@section Stylesheets{
+}
+
+@section Scripts {
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js'></script>
+    <script src="~/js/padraoMascaras.js"></script>
+}

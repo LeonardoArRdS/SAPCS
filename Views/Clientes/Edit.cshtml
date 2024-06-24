@@ -1,0 +1,73 @@
+﻿@model SAPCS.Models.Cliente
+
+@{ ViewData["Title"] = "Edit"; }
+
+<h1>Edição</h1>
+
+<h4>Cliente</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group">
+                <label asp-for="NomeCli" class="control-label"></label>
+                <input type="text" asp-for="NomeCli" class="form-control" placeholder="Nome"
+                pattern="^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" title="Digite um nome." required/>
+                <span asp-validation-for="NomeCli" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TelCli" class="control-label"></label>
+                <input type="tel" minlength="12" asp-for="TelCli" class="form-control" placeholder="88 888888888"
+                pattern="[0-9]{2}[\s][0-9]{5}[0-9]{4}" title="Número não confere com o padrão." required/>
+                <span asp-validation-for="TelCli" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValTel" class="control-label"></label>
+                <select asp-for="ValTel" class="form-control">
+                    <option value="RESIDENCIAL">RESIDENCIAL</option>
+                    <option value="COMERCIAL">COMERCIAL</option>
+                </select>
+                <span asp-validation-for="ValTel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CPFCli" class="control-label"></label>
+                <input type="text" asp-for="CPFCli" class="form-control" placeholder="888.888.888-88"
+                    pattern="^(\d{3}\.\d{3}\.\d{3}-\d{2})|(\d{11})$" title="Digite o cpf corretamente"/>
+                <span asp-validation-for="CPFCli" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailCli" class="control-label"></label>
+                <input type="email" asp-for="EmailCli" class="form-control" placeholder="E-mail" title="Formato inválido."/>
+                <span asp-validation-for="EmailCli" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ValEmail" class="control-label"></label>
+                <input asp-for="ValEmail" class="form-control"/>
+                <span asp-validation-for="ValEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DtNascCli" class="control-label"></label>
+                <input asp-for="DtNascCli" type="text" id="DtNascCli" class="form-control" autocomplete="off" value="@(Model.DtNascCli.ToShortDateString())" />
+                <span asp-validation-for="DtNascCli" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DtCadastro" class="control-label"></label>
+                <input asp-for="DtCadastro" type="hidden" />
+                <span asp-validation-for="DtCadastro" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3">
+                <input type="submit" value="Salvar" class="btn btn-principal" /> |
+                <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Stylesheets{
+}
+
+@section Scripts {
+    
+}

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<SAPCS.Models.Seguradora>
+
+@{
+ViewData["Title"] = "Seguradoras";
+}
+
+<div class="container" style="margin: 12px">
+    <h1>Seguradoras</h1>
+    <p>
+        <a class="btn btn-principal" role="button" asp-action="Create">&#43 Novo</a>
+    </p>
+
+    <p class="reexibir">
+        Reexibir colunas:
+        <button id="rv-0" class="reexibir-vis btn btn-secundario" data-column="0">@Html.DisplayNameFor(model => model.NomeSegur)</button>
+        <button id="rv-1" class="reexibir-vis btn btn-secundario" data-column="1">@Html.DisplayNameFor(model => model.EndSegur)</button>
+        <button id="rv-2" class="reexibir-vis btn btn-secundario" data-column="2">@Html.DisplayNameFor(model => model.TelSegur)</button>
+        <button id="rv-3" class="reexibir-vis btn btn-secundario" data-column="3">@Html.DisplayNameFor(model => model.SiteSegur)</button>
+        <button id="rv-4" class="reexibir-vis btn btn-secundario" data-column="4">@Html.DisplayNameFor(model => model.NomeContSegur)</button>
+        <button id="rv-5" class="reexibir-vis btn btn-secundario" data-column="5">@Html.DisplayNameFor(model => model.EmailContSegur)</button>
+        <button id="rv-6" class="reexibir-vis btn btn-secundario" data-column="6">@Html.DisplayNameFor(model => model.StatusSegur)</button>
+    </p>
+
+    <table class="table" style="width: 100%">
+        <thead class="table-head">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.NomeSegur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EndSegur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TelSegur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SiteSegur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NomeContSegur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmailContSegur)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatusSegur)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-0" class="ocultar-vis btn" data-column="0">@Html.DisplayNameFor(model => model.NomeSegur)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-1" class="ocultar-vis btn" data-column="1">@Html.DisplayNameFor(model => model.EndSegur)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-2" class="ocultar-vis btn" data-column="2">@Html.DisplayNameFor(model => model.TelSegur)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-3" class="ocultar-vis btn" data-column="3">@Html.DisplayNameFor(model => model.SiteSegur)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-4" class="ocultar-vis btn" data-column="4">@Html.DisplayNameFor(model => model.NomeContSegur)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-5" class="ocultar-vis btn" data-column="5">@Html.DisplayNameFor(model => model.EmailContSegur)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-6" class="ocultar-vis btn" data-column="6">@Html.DisplayNameFor(model => model.StatusSegur)</a>
+                </th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+@section Stylesheets{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" />
+}
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
+    <script src="~/js/padroesDtTable.js"></script>
+    <script src="~/js/extraDtTable.js"></script>
+
+    <script>
+        var tabela;
+        const editLink = '@Url.Action("Edit", "Seguradoras")/';
+        const detailsLink = '@Url.Action("Details", "Seguradoras")/';
+        const deleteLink = '@Url.Action("Delete", "Seguradoras")/';
+        var minDate;
+        var maxDate;
+        var exibirTodosRegistros = true;
+
+        $(document).ready(function () {
+            $("button.reexibir-vis").hide();
+            $("p.reexibir").hide();
+
+            tabela = $(".table").DataTable({
+                scrollX: true,
+                processing: true,
+                language: traducaoDataTable,
+                pagingType: "simple_numbers",
+                lengthMenu: padraoLengthMenu,
+                ajax: {
+                    "type": "GET",
+                    "url": "@Url.Action("getSeguradoras", "Seguradoras")",
+                    "datatype": "JSON"
+                },
+                columns: [
+                    { "data": "nomeSegur" },
+                    { "data": "endSegur" },
+                    { "data": "telSegur" },
+                    { "data": "siteSegur" },
+                    { "data": "nomeContSegur" },
+                    { "data": "emailContSegur" },
+                    { "data": "statusSegur" },
+                    {
+                        "data": "id", render: renderizarBotoesCRUD
+                    }
+                ],
+                //order: [[7, 'desc']],
+                preDrawCallback: padraoPreDrawCallback,
+                drawCallback: padraoDrawCallback,
+                fnInitComplete: padraoFnInitComplete
+            });
+
+            $.fn.DataTable.ext.pager.numbers_length = 7;
+
+            $('a.ocultar-vis').on('click', ocultarVisualizacaoColuna);
+            $('button.reexibir-vis').on('click', reexibirVisualizacaoColuna);
+            $('#reexibir-todos').on('click', reexibirTodasColunas);
+        });
+    </script>
+}

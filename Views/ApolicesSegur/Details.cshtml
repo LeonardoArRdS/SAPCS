@@ -1,0 +1,36 @@
+﻿@model SAPCS.Models.ApoliceSegur
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Apólice</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NomeArquivo)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.NomeArquivo)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Cliente)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Cliente.NomeCli)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Funcionario)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Funcionario.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-principal" role="button" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+</div>

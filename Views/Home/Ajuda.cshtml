@@ -1,0 +1,30 @@
+﻿@{ ViewData["Title"] = "Login"; }
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="~/imagens/logo.png" id="icon" alt="M2M Corretora de Seguros" />
+    </div>
+
+    <!-- Login Form -->
+    <form action="~/Home">
+        <div class="form-group">
+            <h2>Faça seu login</h2>
+            <input type="text" id="login" class="fadeIn second" name="login" placeholder="Login" pattern="admin" title="Login inválido." required>
+            <input type="password" id="password" class="fadeIn third" name="login" placeholder="Senha" pattern="root" title="Senha inválida." required>
+            <input type="submit" class="fadeIn btn-secundario fourth" value="Log In">
+        </div>
+    </form>
+  </div>
+</div>
+
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/login.css" />
+}
+
+@section Scripts{
+
+}

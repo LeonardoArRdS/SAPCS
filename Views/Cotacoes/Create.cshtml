@@ -1,0 +1,47 @@
+﻿@model SAPCS.Models.Cotacao
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Cadastrar</h1>
+
+<h4>Cotação</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label">Cliente</label>
+                <select asp-for="ClienteId" class ="form-control" asp-items="ViewBag.ClienteId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FuncionarioId" class="control-label">Funcionário</label>
+                <select asp-for="FuncionarioId" class ="form-control" asp-items="ViewBag.FuncionarioId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServicoId" class="control-label">Serviços</label>
+                <select asp-for="ServicoId" class ="form-control" asp-items="ViewBag.ServicoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StatusCot" class="control-label"></label>
+                <select asp-for="StatusCot" class="form-control">
+                    <option value="@EnumStatusCot.AGUARDANDO">Aguardando</option>
+                    <option value="@EnumStatusCot.PENDENTE">Pendente</option>
+                    <option value="@EnumStatusCot.FINALIZADO">Finalizado</option>
+                    <option value="@EnumStatusCot.CANCELADO">Cancelado</option>
+                </select>
+                <span asp-validation-for="StatusCot" class="text-danger"></span>
+            </div>
+            <div class="form-group pt-3">
+                <input type="submit" value="Criar" class="btn btn-principal"/> |
+                <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

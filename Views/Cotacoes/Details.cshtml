@@ -1,0 +1,48 @@
+﻿@model SAPCS.Models.Cotacao
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Cotação</h4>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayName("Cliente")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cliente.NomeCli)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayName("Funcionário")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Funcionario.Id)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayName("Status")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusCot)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayName("Data de criação")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DtCriacao)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayName("Último contato")
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DtModificacao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-principal" role="button" asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a class="btn btn-secundario" role="button" asp-action="Index">Voltar para lista</a>
+</div>

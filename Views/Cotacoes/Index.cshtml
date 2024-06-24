@@ -1,0 +1,142 @@
+﻿@model IEnumerable<SAPCS.Models.Cotacao>
+
+@{ ViewData["Title"] = "Cotações"; }
+
+<div class="container" style="margin: 12px">
+    <h1>Cotações</h1>
+    <p>
+        <a class="btn btn-principal" role="button" asp-action="Create">&#43 Novo</a>
+    </p>
+
+    <p class="reexibir">
+        <button id="reexibir-todos" class="btn btn-principal">Reexibir todos</button>
+
+        <button id="rv-0" class="reexibir-vis btn btn-secundario" data-column="0">@Html.DisplayNameFor(model => model.Cliente)</button>
+        <button id="rv-1" class="reexibir-vis btn btn-secundario" data-column="1">@Html.DisplayNameFor(model => model.Funcionario)</button>
+        <button id="rv-2" class="reexibir-vis btn btn-secundario" data-column="2">@Html.DisplayNameFor(model => model.Servico)</button>
+        <button id="rv-3" class="reexibir-vis btn btn-secundario" data-column="3">@Html.DisplayNameFor(model => model.StatusCot)</button>
+        <button id="rv-4" class="reexibir-vis btn btn-secundario" data-column="4">@Html.DisplayNameFor(model => model.DtCriacao)</button>
+        <button id="rv-5" class="reexibir-vis btn btn-secundario" data-column="5">@Html.DisplayNameFor(model => model.DtModificacao)</button>
+    </p>
+
+    <table class="table" style="width: 100%">
+        <thead class="table-head">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cliente)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Funcionario)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Servico)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatusCot)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DtCriacao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DtModificacao)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-0" class="ocultar-vis btn" data-column="0">@Html.DisplayNameFor(model => model.Cliente)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-1" class="ocultar-vis btn" data-column="1">@Html.DisplayNameFor(model => model.Funcionario)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-2" class="ocultar-vis btn" data-column="2">@Html.DisplayNameFor(model => model.Funcionario)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-3" class="ocultar-vis btn" data-column="3">@Html.DisplayNameFor(model => model.StatusCot)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-4" class="ocultar-vis btn" data-column="4">@Html.DisplayNameFor(model => model.DtCriacao)</a>
+                </th>
+                <th colspan="1" rowspan="1">
+                    <a id="rv-5" class="ocultar-vis btn" data-column="5">@Html.DisplayNameFor(model => model.DtModificacao)</a>
+                </th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+@section Stylesheets{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.css" />
+}
+
+@section Scripts{
+    <script src="https://cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.js"></script>
+    <script src="~/js/padroesDtTable.js"></script>
+    <script src="~/js/extraDtTable.js"></script>
+
+    <script>
+       var tabela;
+        const editLink = '@Url.Action("Edit", "Cotacoes")/';
+        const detailsLink = '@Url.Action("Details", "Cotacoes")/';
+        const deleteLink = '@Url.Action("Delete", "Cotacoes")/';
+        var minDate;
+        var maxDate;
+        var exibirTodosRegistros = true;
+
+$(document).ready(function() {
+    $("button.reexibir-vis").hide();
+    $("p.reexibir").hide();
+
+    tabela = $(".table").DataTable({
+        scrollX: true,
+        processing: true,
+        language: traducaoDataTable,
+        pagingType: "simple_numbers",
+        lengthMenu: padraoLengthMenu,
+        ajax: {
+            "type": "GET",
+            "url": "@Url.Action("getCotacoes", "Cotacoes")",
+            "datatype": "JSON"
+        },
+        columns: [
+            { "data": "cliente.nomeCli" },
+            { "data": "funcionario.nomeFunc" },
+            { "data": "servico.nomeServ" },
+            { "data": "statusCot" },
+            {
+                "data": "dtCriacao", render: renderizarDateTime
+            },
+            {
+                "data": "dtModificacao", render: renderizarDateTime
+            },
+            {
+                "data": "id", render: renderizarBotoesCRUD
+            }
+        ],
+        order: [
+            [5, 'desc'],
+            [3, 'desc']
+        ],
+        preDrawCallback: padraoPreDrawCallback,
+        drawCallback: padraoDrawCallback,
+        fnInitComplete: padraoFnInitComplete
+    });
+
+    $.fn.DataTable.ext.pager.numbers_length = 7;
+
+    $('a.ocultar-vis').on('click', ocultarVisualizacaoColuna);
+    $('button.reexibir-vis').on('click', reexibirVisualizacaoColuna);
+    $('#reexibir-todos').on('click', reexibirTodasColunas);
+});
+    </script>
+}
