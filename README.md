@@ -40,8 +40,12 @@ O projeto foi desenvolvido como requisito parcial para obtenção de nota na dis
 - **Marcos Moura (Documentação, Requisitos)**
 - **Matheus Santana (Desenvolvimento)**
 - **Leonardo Ariel (Desenvolvimento):** [Leonardo Ariel](https://github.com/LeonardoArRdS)
-- **Orientador:** Cecilia Keiko Adati Tomomitsu
+- **Orientador:** Me. Cecília Keiko Adati Tomomitsu
 
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## Diagramas
+![MER (DB)](imagens/MER-DB.png)
+![MER (Negócio)](imagens/MER.png)
