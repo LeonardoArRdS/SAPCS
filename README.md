@@ -1,4 +1,4 @@
-# SAPCS
+# SAPCS (Sistema de Automação de Processos para Corretoras de Seguros)
 
 ## Projeto de Engenharia de Software III - IES300
 
